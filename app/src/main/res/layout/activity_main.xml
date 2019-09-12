@@ -6,40 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="17dp"
+        android:layout_height="669dp"
+        android:layout_marginStart="388dp"
+        android:layout_marginLeft="388dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="31dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/redButton"
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:layout_weight="1"
+        android:text="Red Ball"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="548dp" />
 
-            <Button
-                android:id="@+id/redButton"
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Red Ball"
-                android:textAllCaps="false"
-                android:textSize="20dp" />
+    <Button
+        android:id="@+id/greenButton"
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:layout_weight="1"
+        android:text="Green Rectangle"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="187dp"
+        tools:layout_editor_absoluteY="548dp" />
 
-            <Button
-                android:id="@+id/greenButton"
-                android:layout_width="1dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Green Rectangle"
-                android:textAllCaps="false"
-                android:textSize="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/customViewLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-        </LinearLayout>
-    </LinearLayout>
+    <SeekBar
+        android:layout_width="405dp"
+        android:layout_height="27dp"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="3dp" />
 </android.support.constraint.ConstraintLayout>
