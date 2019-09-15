@@ -1,8 +1,9 @@
 package edu.binghamton.cs.surface;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -10,11 +11,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
-    private TextView a;
     private Button redButton = null;
 
     private Button greenButton = null;
@@ -23,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private LinearLayout canvasLayout = null;
 
+    private DrawerLayout dl;
+    private ActionBarDrawerToggle t;
+
     MySurface customSurfaceView = null;
 
     @Override
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        dl = (DrawerLayout)findViewById(R.id.draw);
+        t = new ActionBarDrawerToggle(this, dl,, );
         setTitle("SurfaceView");
 
         initControls();
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         // This layout is used to contain custom surfaceview object.
         if(canvasLayout == null)
         {
-     //       canvasLayout = (LinearLayout)findViewById(R.id.customViewLayout);
+            canvasLayout = (LinearLayout)findViewById(R.id.customViewLayout);
         }
     }
 
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             float x = motionEvent.getX();
 
             float y = motionEvent.getY();
-            a.setText(String.format("%.2f", x) + " X COORDINATE" + String.format("%.2f", y) + " X COORDINATE");
+
             customSurfaceView.setCircleX(x);
 
             customSurfaceView.setCircleY(y);
