@@ -1,19 +1,25 @@
 package edu.binghamton.cs.surface;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+
+import java.util.ArrayList;
 
 public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
+    private Bitmap mBitmap;
+    private ArrayList<Point> points;
 
     public MySurface(Context context) {
         super(context);
@@ -52,15 +58,20 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint surfaceBackground = new Paint();
         // Set the surfaceview background color.
-        surfaceBackground.setColor(Color.BLACK);
+        surfaceBackground.setColor(Color.WHITE);
         // Draw the surfaceview background color.
         canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
 
-        // Draw the circle.
-        paint.setColor(Color.RED);
-        canvas.drawCircle(circleX, circleY, 100, paint);
+        if (mBitmap != null)
+            canvas.drawBitmap(mBitmap, 0, 0, paint);
+        for (Point p : points)
+            canvas.drawCircle(p.x, p.y, 50, paint);
 
-        canvas.drawCircle(50, 50, 200, paint);
+        // Draw the circle.
+//        paint.setColor(Color.RED);
+//        canvas.drawCircle(circleX, circleY, 100, paint);
+//
+//        canvas.drawCircle(50, 50, 200, paint);
 
         // Unlock the canvas object and post the new draw.
         surfaceHolder.unlockCanvasAndPost(canvas);

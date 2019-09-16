@@ -1,10 +1,11 @@
 package edu.binghamton.cs.surface;
+
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.graphics.PixelFormat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,9 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private LinearLayout canvasLayout = null;
 
-    private DrawerLayout dl;
-    private ActionBarDrawerToggle t;
-
     MySurface customSurfaceView = null;
 
     @Override
@@ -32,9 +30,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        dl = (DrawerLayout)findViewById(R.id.draw);
-        t = new ActionBarDrawerToggle(this, dl,, );
         setTitle("SurfaceView");
 
         initControls();
