@@ -7,19 +7,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
-import android.graphics.Point;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-
-import java.util.ArrayList;
 
 public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
-    private Bitmap mBitmap;
-    private ArrayList<Point> points;
 
     public MySurface(Context context) {
         super(context);
@@ -52,28 +47,54 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public void drawBall()
     {
         surfaceHolder = getHolder();
-
+        Bitmap bitmap = Bitmap.createBitmap(
+                500, // Width
+                300, // Height
+                Bitmap.Config.ARGB_8888 // Config
+        );
+        Canvas canvas = new Canvas(bitmap);
         // Get and lock canvas object from surfaceHolder.
-        Canvas canvas = surfaceHolder.lockCanvas();
+        canvas = surfaceHolder.lockCanvas();
 
         Paint surfaceBackground = new Paint();
         // Set the surfaceview background color.
-        surfaceBackground.setColor(Color.WHITE);
-        // Draw the surfaceview background color.
-        canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
+        surfaceBackground.setColor(Color.BLACK);
 
-        if (mBitmap != null)
-            canvas.drawBitmap(mBitmap, 0, 0, paint);
-        for (Point p : points)
-            canvas.drawCircle(p.x, p.y, 50, paint);
+        canvas.drawColor(Color.LTGRAY);
+
+        // Initialize a new Paint instance to draw the line
+        // Draw the surfaceview background color.
+        //canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
 
         // Draw the circle.
-//        paint.setColor(Color.RED);
-//        canvas.drawCircle(circleX, circleY, 100, paint);
-//
-//        canvas.drawCircle(50, 50, 200, paint);
+        paint.setColor(Color.RED);
+        paint.setColor(Color.RED);
+        paint.setStyle(Paint.Style.STROKE);
+        // Line width in pixels
+        paint.setStrokeWidth(8);
+        paint.setAntiAlias(true);
+
+        // Set a pixels value to offset the line from canvas edge
+        int offset = 50;
+        //canvas.drawCircle(circleX, circleY, 100, paint);
+
+        //canvas.drawCircle(50, 50, 200, paint);
 
         // Unlock the canvas object and post the new draw.
+        canvas.drawLine(
+                offset, // startX
+                canvas.getHeight() / 2, // startY
+                canvas.getWidth() - offset, // stopX
+                canvas.getHeight() / 2, // stopY
+                paint // Paint
+        );
+        canvas.drawLine(
+                canvas.getWidth() / 2, // startX
+                offset, // startY
+                canvas.getWidth() / 2, // stopX
+                canvas.getHeight() - offset, // stopY
+                paint // Paint
+        );
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
