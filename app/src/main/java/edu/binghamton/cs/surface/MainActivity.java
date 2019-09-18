@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private LinearLayout canvasLayout = null;
 
     MySurface customSurfaceView = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

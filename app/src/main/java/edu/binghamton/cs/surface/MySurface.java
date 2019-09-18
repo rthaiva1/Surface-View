@@ -23,9 +23,6 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         paint = new Paint();
         paint.setColor(Color.RED);
-
-        // this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        // paint.setStyle(Style.FILL);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint surfaceBackground = new Paint();
         // Set the surfaceview background color.
-        surfaceBackground.setColor(Color.BLACK);
+        surfaceBackground.setColor(Color.WHITE);
 
         canvas.drawColor(Color.LTGRAY);
 
@@ -67,8 +64,7 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         //canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
 
         // Draw the circle.
-        paint.setColor(Color.RED);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         // Line width in pixels
         paint.setStrokeWidth(8);
@@ -83,18 +79,20 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         // Unlock the canvas object and post the new draw.
         canvas.drawLine(
                 offset, // startX
-                canvas.getHeight() / 2, // startY
+                canvas.getHeight() - offset, // startY
                 canvas.getWidth() - offset, // stopX
-                canvas.getHeight() / 2, // stopY
-                paint // Paint
-        );
-        canvas.drawLine(
-                canvas.getWidth() / 2, // startX
-                offset, // startY
-                canvas.getWidth() / 2, // stopX
                 canvas.getHeight() - offset, // stopY
                 paint // Paint
         );
+        canvas.drawLine(
+                offset, // startX
+                offset, // startY
+                offset, // stopX
+                canvas.getHeight() - offset, // stopY
+                paint // Paint
+        );
+
+        canvas.drawLine(20, 100, 140, 30, paint);
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
