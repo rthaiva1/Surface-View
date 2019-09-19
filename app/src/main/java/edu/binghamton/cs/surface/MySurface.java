@@ -10,19 +10,21 @@ import android.graphics.PixelFormat;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
+import java.util.Random;
+
 public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
-
+    int[][] a = new int[10][4];
+    int flag;
     public MySurface(Context context) {
         super(context);
-
         surfaceHolder = getHolder();
-
         paint = new Paint();
         paint.setColor(Color.RED);
+        flag=0;
     }
 
     @Override
@@ -109,55 +111,67 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
                     grid // Paint
             );
         }
-        offset = 100;
         canvas.drawLine(
                 offset, // startX
-                canvas.getHeight() - offset, // startY
-                700, // stopX
-                canvas.getHeight() - offset, // stopY
+                canvas.getHeight() /2, // startY
+                canvas.getWidth() - offset, // stopX
+                canvas.getHeight() /2, // stopY
                 paint // Paint
         );
         canvas.drawLine(
-                offset, // startX
+                canvas.getWidth()/2, // startX
                 offset, // startY
-                offset, // stopX
+                canvas.getWidth()/2, // stopX
                 canvas.getHeight() - offset, // stopY
                 paint // Paint
         );
-        canvas.drawLine(70, 140, 100, 96, paint);
-        canvas.drawLine(130, 140, 100, 96, paint);
-        canvas.drawLine(650, 960, 700, 990, paint);
-        canvas.drawLine(650, 1020, 700, 990, paint);
 
-        canvas.drawLine(100, 900, 200, 70, paint);
-        canvas.drawLine(200, 70, 300, canvas.getHeight()-200, paint);
-        canvas.drawLine(300, canvas.getHeight()-200, 400, 150, paint);
-        canvas.drawLine(400, 150, 500, canvas.getHeight()-430, paint);
-        canvas.drawLine(500, canvas.getHeight()-430, 600, 330, paint);
-        canvas.drawLine(600, 330, 700, canvas.getHeight()-630, paint);
+        canvas.drawLine((canvas.getWidth()/2)-30, offset+50, canvas.getWidth()/2, offset, paint);
+        canvas.drawLine((canvas.getWidth()/2)+30, offset+50, canvas.getWidth()/2, offset, paint);
+        canvas.drawLine((canvas.getWidth()/2)-30, canvas.getHeight() - offset-50, canvas.getWidth()/2, canvas.getHeight() - offset, paint);
+        canvas.drawLine((canvas.getWidth()/2)+30, canvas.getHeight() - offset-50, canvas.getWidth()/2, canvas.getHeight() - offset, paint);
+        canvas.drawLine(canvas.getWidth() -offset-50, (canvas.getHeight() /2)-30, canvas.getWidth() - offset, canvas.getHeight() /2, paint);
+        canvas.drawLine(canvas.getWidth() -offset- 50, (canvas.getHeight() /2)+30, canvas.getWidth() - offset, canvas.getHeight() /2, paint);
+        canvas.drawLine(offset+50, (canvas.getHeight() /2)-30, offset, canvas.getHeight() /2, paint);
+        canvas.drawLine(offset+50, (canvas.getHeight() /2)+30, offset, canvas.getHeight() /2, paint);
+
+        if(flag == 0)
+        {
+            Random r = new Random();
+            int low = offset;
+            int highx = canvas.getWidth() - offset;
+            int highy = canvas.getHeight() - offset;
+            for(int i =0; i<10 ; i++)
+            {
+                for(int j =0; j<4 ; j++)
+                {
+                    if((j == 0) || (j == 2)) {
+                        a[i][j] = r.nextInt(highx - low) + low;
+                    }
+                    else  if((j == 1) || (j == 3))
+                    {
+                        a[i][j] = r.nextInt(highy - low) + low;
+                    }
+                }
+            }
+            flag =1;
+        }
+        canvas.drawLine(a[0][0], a[0][1], a[0][2], a[0][3], paint);
+        canvas.drawLine(a[1][0], a[1][1], a[1][2], a[1][3], paint);
+        canvas.drawLine(a[2][0], a[2][1], a[2][2], a[2][3], paint);
+        canvas.drawLine(a[3][0], a[3][1], a[3][2], a[3][3], paint);
+        canvas.drawLine(a[4][0], a[4][1], a[4][2], a[4][3], paint);
+        canvas.drawLine(a[5][0], a[5][1], a[5][2], a[5][3], paint);
+        canvas.drawLine(a[6][0], a[6][1], a[6][2], a[6][3], paint);
+        canvas.drawLine(a[7][0], a[7][1], a[7][2], a[7][3], paint);
+        canvas.drawLine(a[8][0], a[8][1], a[8][2], a[8][3], paint);
+        canvas.drawLine(a[9][0], a[9][1], a[9][2], a[9][3], paint);
 
         paint.setColor(Color.BLACK);
         paint.setTextSize(50);
         paint.setStrokeWidth(4);
         canvas.drawText(String.valueOf(circleX), 500, 100, paint);
         canvas.drawText(String.valueOf(circleY), 500, 150, paint);
-        surfaceHolder.unlockCanvasAndPost(canvas);
-    }
-
-    /* This method will be invoked to draw a circle in canvas. */
-    public void drawRect()
-    {
-        Canvas canvas = surfaceHolder.lockCanvas();
-
-        Paint surfaceBackground = new Paint();
-        // Set the surfaceview background color.
-        surfaceBackground.setColor(Color.BLUE);
-        // Draw the surfaceview background color.
-        canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
-
-        // Draw the rectangle.
-        canvas.drawRect(circleX, circleY, circleX + 200, circleY + 200, paint);
-
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 

@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
     private Button redButton = null;
 
-    private Button greenButton = null;
+    private SeekBar m = null;
+
+    private SeekBar b = null;
 
     private boolean drawBall = true;
 
@@ -57,14 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
 
-        // Click this button to draw a green rectangle move after finger touch.
-        greenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawBall = false;
-            }
-        });
-
     }
 
     /* Initialise ui controls. */
@@ -75,11 +70,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             redButton = (Button)findViewById(R.id.redButton);
         }
 
-        if(greenButton == null)
+        if(m == null)
         {
-            greenButton = (Button)findViewById(R.id.greenButton);
+            m = (SeekBar) findViewById(R.id.seekBar);
+            m.setBackgroundColor(Color.GREEN);
         }
 
+        if(b == null)
+        {
+            b = (SeekBar) findViewById(R.id.seekBar2);
+            b.setBackgroundColor(Color.GREEN);
+        }
         // This layout is used to contain custom surfaceview object.
         if(canvasLayout == null)
         {
@@ -110,15 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 customSurfaceView.setPaint(paint);
 
                 customSurfaceView.drawBall();
-            } else {
-                // Create and set a green paint to custom surfaceview.
-                Paint paint = new Paint();
-                paint.setColor(Color.GREEN);
-                customSurfaceView.setPaint(paint);
-
-                customSurfaceView.drawRect();
             }
-
             // Tell android os the onTouch event has been processed.
             return true;
         }else
