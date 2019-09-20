@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
+import android.view.ScaleGestureDetector;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -17,14 +18,22 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private Paint paint = null;
     private float circleX = 0;
     private float circleY = 0;
+    private float slope = 0;
+    private float intercept = 0;
     int[][] a = new int[10][4];
     int flag;
+    private static float MIN_ZOOM = 1f;
+    private static float MAX_ZOOM = 5f;
+    private float scaleFactor = 1.f;
+    private ScaleGestureDetector detector;
+
     public MySurface(Context context) {
         super(context);
         surfaceHolder = getHolder();
         paint = new Paint();
         paint.setColor(Color.RED);
         flag=0;
+     //   detector = new ScaleGestureDetector(getContext(), new ScaleListener());
     }
 
     @Override
@@ -57,16 +66,10 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         Paint surfaceBackground = new Paint();
         Paint grid = new Paint();
-        // Set the surfaceview background color.
         surfaceBackground.setColor(Color.rgb(153,219,255));
 
         canvas.drawColor(Color.rgb(153,219,255));
 
-        // Initialize a new Paint instance to draw the line
-        // Draw the surfaceview background color.
-        //canvas.drawRect(0, 0, this.getWidth(), this.getHeight(), surfaceBackground);
-
-        // Draw the circle.
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         // Line width in pixels
@@ -82,11 +85,6 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
         // Set a pixels value to offset the line from canvas edge
         int offset = 50;
-        //canvas.drawCircle(circleX, circleY, 100, paint);
-
-        //canvas.drawCircle(50, 50, 200, paint);
-
-        // Unlock the canvas object and post the new draw.
         int temp =0;
         for(int i= 0 ; i<=canvas.getHeight() ; i ++)
         {
@@ -156,6 +154,24 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
             }
             flag =1;
         }
+        else
+        {
+            for(int i =0; i<10 ; i++)
+            {
+                for(int j =0; j<4 ; j++)
+                {
+                    int temp1=0;
+                    if((j == 1) || (j == 3))
+                    {
+                        temp1 = (int)slope * a[i][j-1] + (int)intercept;
+                        if((temp1<(int)getHeight() - offset) && temp1 > offset)
+                        {
+                         //   a[i][j] =temp1;
+                        }
+                    }
+                }
+            }
+        }
         canvas.drawLine(a[0][0], a[0][1], a[0][2], a[0][3], paint);
         canvas.drawLine(a[1][0], a[1][1], a[1][2], a[1][3], paint);
         canvas.drawLine(a[2][0], a[2][1], a[2][2], a[2][3], paint);
@@ -170,8 +186,14 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         paint.setColor(Color.BLACK);
         paint.setTextSize(50);
         paint.setStrokeWidth(4);
-        canvas.drawText(String.valueOf(circleX), 500, 100, paint);
-        canvas.drawText(String.valueOf(circleY), 500, 150, paint);
+        canvas.drawText("X coordinate:     " + String.valueOf(circleX), offset, getHeight()-30, paint);
+        canvas.drawText("Y coordinate:     " + String.valueOf(circleY), offset, offset, paint);
+
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(50);
+        paint.setStrokeWidth(4);
+        canvas.drawText("Slope:     " + String.valueOf(slope), offset, getHeight()-90, paint);
+        canvas.drawText("Intercept:     " + String.valueOf(intercept), offset, offset+90, paint);
         surfaceHolder.unlockCanvasAndPost(canvas);
     }
 
@@ -193,6 +215,14 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
 
     public Paint getPaint() {
         return paint;
+    }
+
+    public void setm(float a) {
+        this.slope = a;
+    }
+
+    public void setb(float b) {
+        this.intercept = b;
     }
 
     public void setPaint(Paint paint) {

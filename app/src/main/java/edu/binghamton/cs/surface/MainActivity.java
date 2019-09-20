@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     private Button redButton = null;
 
-    private SeekBar m = null;
+    private SeekBar m= null;
 
     private SeekBar b = null;
 
@@ -59,8 +59,44 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 drawBall = true;
             }
         });
+        m.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+        boolean fromUser) {
+            // TODO Auto-generated method stub
+            customSurfaceView.setm(Float.parseFloat(String.valueOf(progress)));
+        }
 
-    }
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            // TODO Auto-generated method stub
+        }
+    });
+
+        b.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                customSurfaceView.setb(Float.parseFloat(String.valueOf(progress)));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+        });
+}
 
     /* Initialise ui controls. */
     private void initControls()
@@ -73,14 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         if(m == null)
         {
             m = (SeekBar) findViewById(R.id.seekBar);
-            m.setBackgroundColor(Color.GREEN);
         }
 
         if(b == null)
         {
-            b = (SeekBar) findViewById(R.id.seekBar2);
-            b.setBackgroundColor(Color.GREEN);
+            b = (SeekBar) findViewById(R.id.seekBar1);
         }
+
         // This layout is used to contain custom surfaceview object.
         if(canvasLayout == null)
         {
@@ -103,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             customSurfaceView.setCircleX(x);
 
             customSurfaceView.setCircleY(y);
+
 
             if (drawBall) {
                 // Create and set a red paint to custom surfaceview.
