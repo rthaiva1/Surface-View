@@ -5,9 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.PixelFormat;
-import android.view.ScaleGestureDetector;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
@@ -22,18 +19,12 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     private float intercept = 0;
     int[][] a = new int[10][4];
     int flag;
-    private static float MIN_ZOOM = 1f;
-    private static float MAX_ZOOM = 5f;
-    private float scaleFactor = 1.f;
-    private ScaleGestureDetector detector;
-
     public MySurface(Context context) {
         super(context);
         surfaceHolder = getHolder();
         paint = new Paint();
         paint.setColor(Color.RED);
         flag=0;
-     //   detector = new ScaleGestureDetector(getContext(), new ScaleListener());
     }
 
     @Override
@@ -44,16 +35,15 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
 
     }
-
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         paint = null;
-
     }
 
     /* This method will be invoked to draw a circle in canvas. */
     public void drawBall()
     {
+
         surfaceHolder = getHolder();
         Bitmap bitmap = Bitmap.createBitmap(
                 500, // Width
@@ -61,7 +51,6 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
                 Bitmap.Config.ARGB_8888 // Config
         );
         Canvas canvas = new Canvas(bitmap);
-        // Get and lock canvas object from surfaceHolder.
         canvas = surfaceHolder.lockCanvas();
 
         Paint surfaceBackground = new Paint();
@@ -160,13 +149,13 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
             {
                 for(int j =0; j<4 ; j++)
                 {
-                    int temp1=0;
+                    int temp1;
                     if((j == 1) || (j == 3))
                     {
-                        temp1 = (int)slope * a[i][j-1] + (int)intercept;
-                        if((temp1<(int)getHeight() - offset) && temp1 > offset)
+                        temp1 = ((int)slope * a[i][j-1] + (int)intercept)% getHeight();
+                        if(temp1 > offset)
                         {
-                         //   a[i][j] =temp1;
+                           a[i][j] =temp1;
                         }
                     }
                 }
@@ -184,14 +173,64 @@ public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawLine(a[9][0], a[9][1], a[9][2], a[9][3], paint);
 
         paint.setColor(Color.BLACK);
-        paint.setTextSize(50);
-        paint.setStrokeWidth(4);
-        canvas.drawText("X coordinate:     " + String.valueOf(circleX), offset, getHeight()-30, paint);
-        canvas.drawText("Y coordinate:     " + String.valueOf(circleY), offset, offset, paint);
+        paint.setTextSize(getHeight()*50/1800);
+        paint.setStrokeWidth(getHeight()*4/1800);
+
+        if(circleX>=getWidth()/2)
+        {
+            canvas.drawText("X coordinate:     " + String.valueOf(circleX-getWidth()/2), offset, getHeight()-30, paint);
+        }
+        else
+        {
+            canvas.drawText("X coordinate:    -" + String.valueOf(getWidth()/2-circleX), offset, getHeight()-30, paint);
+        }
+        if(circleY>=getHeight()/2)
+        {
+            canvas.drawText("Y coordinate:    -" + String.valueOf(circleY-getHeight()/2), offset, offset, paint);
+        }
+        else
+        {
+            canvas.drawText("Y coordinate:     " + String.valueOf(getHeight()/2-circleY), offset, offset, paint);
+        }
+
+        canvas.drawText("X axis" , (getWidth()*1)/10, getHeight()/2-50, paint);
+        canvas.drawText("X axis" , (getWidth()*8)/10, getHeight()/2-50, paint);
+        canvas.drawText("Y axis" , getWidth()/2+50, getHeight()/10, paint);
+        canvas.drawText("Y axis" , getWidth()/2+50, (getHeight()*9)/10, paint);
+
+
+        canvas.drawText(String.valueOf((int)((getHeight()*3)/10)) , getWidth()/2+50, (getHeight()*2)/10, paint);
+        canvas.drawText(String.valueOf((int)((getHeight()*2)/10)) , getWidth()/2+50, (getHeight()*3)/10, paint);
+        canvas.drawText(String.valueOf((int)((getHeight()*1)/10)) , getWidth()/2+50, (getHeight()*4)/10, paint);
+        canvas.drawText("0" , getWidth()/2+50, ((getHeight()*(float)5.3)/10), paint);
+        canvas.drawText("-" + String.valueOf((int)((getHeight()*1)/10)) , getWidth()/2+50, (getHeight()*6)/10, paint);
+        canvas.drawText("-" + String.valueOf((int)((getHeight()*2)/10)) , getWidth()/2+50, (getHeight()*7)/10, paint);
+        canvas.drawText("-" + String.valueOf((int)((getHeight()*3)/10)) , getWidth()/2+50, (getHeight()*8)/10, paint);
+
+        canvas.drawText("-" + String.valueOf((int)((getWidth()*3)/10)) , (getWidth()*2)/10, getHeight()/2+50, paint);
+        canvas.drawText("-" + String.valueOf((int)((getWidth()*2)/10)), (getWidth()*3)/10, getHeight()/2+50, paint);
+        canvas.drawText("-" + String.valueOf((int)((getWidth()*1)/10)) , (getWidth()*4)/10, getHeight()/2+50, paint);
+        canvas.drawText(String.valueOf((int)((getWidth()*1)/10)) , (getWidth()*6)/10, getHeight()/2+50, paint);
+        canvas.drawText(String.valueOf((int)((getWidth()*2)/10)) , (getWidth()*7)/10, getHeight()/2+50, paint);
+        canvas.drawText(String.valueOf((int)((getWidth()*3)/10)), (getWidth()*8)/10, getHeight()/2+50, paint);
+
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*2)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*2)/10, paint);
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*3)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*3)/10, paint);
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*4)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*4)/10, paint);
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*6)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*6)/10, paint);
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*7)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*7)/10, paint);
+        canvas.drawLine( getWidth()/2 - (getWidth()*(float)0.1)/10,(getHeight()*8)/10 , getWidth()/2 + (getWidth()*(float)0.1)/10, (getHeight()*8)/10, paint);
+
+
+        canvas.drawLine((getWidth()*2)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*2)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+        canvas.drawLine((getWidth()*3)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*3)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+        canvas.drawLine((getWidth()*4)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*4)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+        canvas.drawLine((getWidth()*6)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*6)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+        canvas.drawLine((getWidth()*7)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*7)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+        canvas.drawLine((getWidth()*8)/10,getHeight()/2 - (getHeight()*(float)0.1)/10 , (getWidth()*8)/10,getHeight()/2 + (getHeight()*(float)0.1)/10 ,paint);
+
 
         paint.setColor(Color.BLACK);
-        paint.setTextSize(50);
-        paint.setStrokeWidth(4);
         canvas.drawText("Slope:     " + String.valueOf(slope), offset, getHeight()-90, paint);
         canvas.drawText("Intercept:     " + String.valueOf(intercept), offset, offset+90, paint);
         surfaceHolder.unlockCanvasAndPost(canvas);

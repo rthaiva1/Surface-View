@@ -2,11 +2,8 @@ package edu.binghamton.cs.surface;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
-import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -61,42 +58,35 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         });
         m.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-        boolean fromUser) {
-            // TODO Auto-generated method stub
-            customSurfaceView.setm(Float.parseFloat(String.valueOf(progress)));
+        public void onProgressChanged(SeekBar s,int value,boolean val) {
+            customSurfaceView.setm(Float.parseFloat(String.valueOf(value)));
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            // TODO Auto-generated method stub
         }
     });
 
         b.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                // TODO Auto-generated method stub
-                customSurfaceView.setb(Float.parseFloat(String.valueOf(progress)));
+            public void onProgressChanged(SeekBar s,int value,boolean val) {
+                customSurfaceView.setb(Float.parseFloat(String.valueOf(value)));
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+            public void onStartTrackingTouch(SeekBar s) {
             }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+            public void onStopTrackingTouch(SeekBar s) {
             }
         });
-}
+
+    }
 
     /* Initialise ui controls. */
     private void initControls()
@@ -138,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             customSurfaceView.setCircleX(x);
 
             customSurfaceView.setCircleY(y);
-
 
             if (drawBall) {
                 // Create and set a red paint to custom surfaceview.

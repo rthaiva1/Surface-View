@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ww"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -24,6 +25,7 @@
                 android:text="Draw Graph"
                 android:textAllCaps="false"
                 android:textSize="20dp"
+                android:backgroundTint="@android:color/holo_blue_dark"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
@@ -37,6 +39,7 @@
                 android:id="@+id/seekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/ww"
                 android:max="100"/>
         </LinearLayout>
 
@@ -63,6 +66,7 @@
                 android:id="@+id/seekBar1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/ww"
                 android:max="100"/>
         </LinearLayout>
     <LinearLayout
