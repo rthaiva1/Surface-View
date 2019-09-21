@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import java.util.Random;
 
 public class MySurface extends SurfaceView implements SurfaceHolder.Callback {
+
     private SurfaceHolder surfaceHolder = null;
     private Paint paint = null;
     private float circleX = 0;

@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         @Override
         public void onProgressChanged(SeekBar s,int value,boolean val) {
             customSurfaceView.setm(Float.parseFloat(String.valueOf(value)));
+            customSurfaceView.drawBall();
         }
 
         @Override
@@ -75,10 +76,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             @Override
             public void onProgressChanged(SeekBar s,int value,boolean val) {
                 customSurfaceView.setb(Float.parseFloat(String.valueOf(value)));
+                customSurfaceView.drawBall();
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar s) {
+
             }
 
             @Override
